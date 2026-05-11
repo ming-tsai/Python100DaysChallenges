@@ -3,27 +3,27 @@ import art
 print(art.logo)
 print("Welcome to the secret auction program.")
 
-close_auction = False
-bider_dictionary = {}
-    
-def find_higest_bider(bider_dictionary):
-    maxed = 0
-    maxed_name = ""
-    for bidded_name in bider_dictionary:
-        if bider_dictionary[bidded_name] > maxed:
-            maxed_name = bidded_name
-            maxed = bider_dictionary[bidded_name]
+bids = {}
 
-    print(f"This auction winner is {maxed_name}, with amout {maxed}")
+def find_highest_bidder(bids):
+    highest_bid = 0
+    winner_name = ""
 
-while not close_auction:
+    for bidder_name in bids:
+        if bids[bidder_name] > highest_bid:
+            winner_name = bidder_name
+            highest_bid = bids[bidder_name]
+
+    print(f"The auction winner is {winner_name} with a bid of ${highest_bid:.2f}")
+
+while True:
     name = input("What is your name? ")
-    bider = float(input("What is your bid? $"))
-    bider_dictionary[name] = bider
+    bid_amount = float(input("What is your bid? $"))
+    bids[name] = bid_amount
 
-    has_more_bider = input("Are there other users who want to bid? Type 'Yes' or ").lower()
-    if has_more_bider == "yes":
+    more_bidders = input("Are there other bidders? Type 'yes' or 'no': ").lower()
+    if more_bidders == "yes":
         print("\n" * 20)
     else:
-        find_higest_bider(bider_dictionary)
-        close_auction = True
+        find_highest_bidder(bids)
+        break
