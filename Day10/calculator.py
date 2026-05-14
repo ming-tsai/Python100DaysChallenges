@@ -1,6 +1,4 @@
-
-def calculator_art():
-    art = """
+CALCULATOR_ART = """
      _____________________
     |  _________________  |
     | |                 | |
@@ -16,50 +14,34 @@ def calculator_art():
     | | . | 0 | = | | / | |
     | |___|___|___| |___| |
     |_____________________|
-    """
-    return art
+"""
 
-def add(a, b):
-    return a + b
+def add(a, b): return a + b
+def subtract(a, b): return a - b
+def multiply(a, b): return a * b
+def divide(a, b): return "Error: can't divide by zero!" if b == 0 else a / b
 
-def subtract(a, b):
-    return a - b
-
-def multiply(a, b):
-    return a * b
-
-def divide(a, b):
-    return a / b
-
-operations = {
-    "+": add,
-    "-": subtract,
-    "*": multiply,
-    "/": divide
-}
+operations = {"+": add, "-": subtract, "*": multiply, "/": divide}
 
 def calculator():
-    print(calculator_art())
+    print(CALCULATOR_ART)
     first = float(input("What's the first number?: "))
-    for symbol in operations:
-        print(symbol)
-        
-    should_continue = True
-    
-    while should_continue:
-        operation_symbol = input("Pick an operation: ")
-        second = float(input("What's the next number?: "))
-        
-        calculation_function = operations[operation_symbol]
-        answer = calculation_function(first, second)
-        
-        print(f"{first} {operation_symbol} {second} = {answer}")
-        
-        choice = input(f"Type 'y' to continue calculating with {answer}, or 'n' to start a new calculation: ").lower()
-        
-        if choice == 'y':
-            first = answer
-        else:
-            should_continue = False
 
-calculator()
+    while True:
+        print(" ".join(operations))
+        operation_symbol = input("Pick an operation: ")
+
+        if operation_symbol not in operations:
+            print("Invalid operation! Try +, -, *, or /")
+            continue
+
+        second = float(input("What's the next number?: "))
+        answer = operations[operation_symbol](first, second)
+
+        print(f"{first} {operation_symbol} {second} = {answer}")
+
+        choice = input(f"Type 'y' to continue with {answer}, or 'n' to start over: ").lower()
+        first = answer if choice == 'y' else float(input("What's the first number?: "))
+
+if __name__ == "__main__":
+    calculator()
